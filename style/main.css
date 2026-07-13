@@ -758,37 +758,21 @@ hr {
     margin-top: 30px !important; } }
 
 html, body {
-  height: 100%;
-  overflow: hidden;
-}
-
-body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.container {
-  transform: scale(0.85);
-  transform-origin: center center;
-}
-
-html, body {
-  height: 100%;
-  overflow: hidden;
+  min-height: 100%;
+  overflow-y: auto;
 }
 
 body {
   margin: 0;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
 }
 
 .container {
-  margin: 0;
-  padding: 0;
-  max-height: 100vh;
+  margin-top: 20px;
+  padding-bottom: 20px;
   transform: scale(0.75);
-  transform-origin: center center;
+  transform-origin: top center;
+  max-height: none;
 }
