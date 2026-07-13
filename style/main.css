@@ -759,8 +759,7 @@ hr {
 
 html, body {
   margin: 0;
-  width: 100%;
-  height: 100%;
+  min-height: 100%;
 }
 
 body {
@@ -771,11 +770,19 @@ body {
 }
 
 .container {
-  width: min(95vw, 520px);
+  transform-origin: center center;
 }
 
-/* Discord Activity sizing */
-.game-container {
-  width: min(90vw, 55vh);
-  height: min(90vw, 55vh);
+/* Discord Activity normal window */
+@media (max-height: 900px) {
+  .container {
+    transform: scale(0.75);
+  }
+}
+
+/* Discord Activity smaller/mobile */
+@media (max-height: 700px) {
+  .container {
+    transform: scale(0.6);
+  }
 }
