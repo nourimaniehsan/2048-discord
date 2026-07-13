@@ -758,9 +758,9 @@ hr {
     margin-top: 30px !important; } }
 
 html, body {
+  margin: 0;
   width: 100%;
   height: 100%;
-  margin: 0;
 }
 
 body {
@@ -771,20 +771,11 @@ body {
 }
 
 .container {
-  width: 520px;
-  max-width: 95vw;
-  transform-origin: center center;
+  width: min(95vw, 520px);
 }
 
-/* Fit inside shorter Discord windows */
-@media screen and (max-height: 800px) {
-  .container {
-    transform: scale(0.75);
-  }
-}
-
-@media screen and (max-height: 650px) {
-  .container {
-    transform: scale(0.6);
-  }
+/* Discord Activity sizing */
+.game-container {
+  width: min(90vw, 55vh);
+  height: min(90vw, 55vh);
 }
