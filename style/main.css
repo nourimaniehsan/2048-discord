@@ -772,3 +772,23 @@ body {
   transform: scale(0.85);
   transform-origin: center center;
 }
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  margin: 0;
+  padding: 0;
+  max-height: 100vh;
+  transform: scale(0.75);
+  transform-origin: center center;
+}
