@@ -757,35 +757,45 @@ hr {
   .game-message .lower {
     margin-top: 30px !important; } }
 
-/* Discord Activity responsive sizing */
+/* Discord Activity fit fix */
+
 html,
 body {
   width: 100%;
   min-height: 100%;
+  margin: 0;
   overflow: auto;
 }
 
 body {
-  margin: 0;
-  padding: 0;
   display: flex;
   justify-content: center;
   align-items: flex-start;
 }
 
 .container {
-  width: min(92vw, 500px);
-  margin: 10px auto;
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 10px;
+  box-sizing: border-box;
 }
 
 .game-container {
-  width: min(92vw, 500px);
-  height: min(92vw, 500px);
+  width: min(100%, 500px);
+  aspect-ratio: 1 / 1;
+  height: auto;
 }
 
-@media (max-height: 700px) {
-  .container {
-    transform: scale(calc(100vh / 750));
-    transform-origin: top center;
-  }
+.heading {
+  width: 100%;
+}
+
+h1.title {
+  font-size: clamp(35px, 10vw, 80px);
+}
+
+.score-container,
+.best-container {
+  font-size: clamp(14px, 4vw, 25px);
 }
