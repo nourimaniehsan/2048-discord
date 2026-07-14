@@ -757,30 +757,12 @@ hr {
   .game-message .lower {
     margin-top: 30px !important; } }
 
-/* Discord Activity Fix */
-
-html,
-body {
-    overflow: hidden !important;
-}
-
-.container {
-    transform: scale(0.75);
-    transform-origin: top center;
-    position: relative;
-    top: 25px;
-}
-
-@media (min-height: 750px) {
-    .container {
-        transform: scale(0.9);
-        top: 20px;
-    }
-}
-
-@media (max-width: 600px) {
-    .container {
-        transform: scale(0.72);
-        top: 45px;
-    }
+body::before {
+    content: "DISCORD UPDATE TEST";
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 99999;
+    color: red;
+    font-size: 20px;
 }
