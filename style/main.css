@@ -757,33 +757,30 @@ hr {
   .game-message .lower {
     margin-top: 30px !important; } }
 
-/* Discord Activity fit fix */
+/* Discord Activity Fix */
 
-.container {
-    width: min(500px, 92vw) !important;
-    height: auto !important;
-
-    margin: 0 auto !important;
-    padding-top: 60px !important;
-
-    transform: scale(0.82) !important;
-    transform-origin: top center !important;
+html,
+body {
+    overflow: hidden !important;
 }
 
+.container {
+    transform: scale(0.75);
+    transform-origin: top center;
+    position: relative;
+    top: 25px;
+}
 
-/* More space when Discord chat is hidden */
 @media (min-height: 750px) {
     .container {
-        transform: scale(0.95) !important;
-        padding-top: 30px !important;
+        transform: scale(0.9);
+        top: 20px;
     }
 }
 
-
-/* Mobile Discord */
 @media (max-width: 600px) {
     .container {
-        transform: scale(0.80) !important;
-        padding-top: 70px !important;
+        transform: scale(0.72);
+        top: 45px;
     }
 }
