@@ -756,13 +756,3 @@ hr {
     margin-top: 90px !important; }
   .game-message .lower {
     margin-top: 30px !important; } }
-
-body::before {
-    content: "DISCORD UPDATE TEST";
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 99999;
-    color: red;
-    font-size: 20px;
-}
