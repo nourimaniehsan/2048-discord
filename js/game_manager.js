@@ -5,6 +5,7 @@ function GameManager(size, InputManager, Actuator, StorageManager) {
   this.actuator       = new Actuator;
 
   this.startTiles     = 2;
+  this.scoreSubmitted = false;
 
   this.inputManager.on("move", this.move.bind(this));
   this.inputManager.on("restart", this.restart.bind(this));
@@ -17,6 +18,7 @@ function GameManager(size, InputManager, Actuator, StorageManager) {
 GameManager.prototype.restart = function () {
   this.storageManager.clearGameState();
   this.actuator.continueGame(); // Clear the game won/lost message
+  this.scoreSubmitted = false;
   this.setup();
 };
 
@@ -37,17 +39,17 @@ GameManager.prototype.setup = function () {
 
   // Reload the game from a previous game if present
   if (previousState) {
-    this.grid        = new Grid(previousState.grid.size,
-                                previousState.grid.cells); // Reload grid
-    this.score       = previousState.score;
-    this.over        = previousState.over;
-    this.won         = previousState.won;
+    this.grid = new Grid(previousState.grid.size,
+                         previousState.grid.cells);
+    this.score = previousState.score;
+    this.over = previousState.over;
+    this.won = previousState.won;
     this.keepPlaying = previousState.keepPlaying;
   } else {
-    this.grid        = new Grid(this.size);
-    this.score       = 0;
-    this.over        = false;
-    this.won         = false;
+    this.grid = new Grid(this.size);
+    this.score = 0;
+    this.over = false;
+    this.won = false;
     this.keepPlaying = false;
 
     // Add the initial tiles
@@ -81,9 +83,16 @@ GameManager.prototype.actuate = function () {
     this.storageManager.setBestScore(this.score);
   }
 
-  // Clear the state when the game is over (game over only, not win)
+    // Clear the state when the game is over (game over only, not win)
   if (this.over) {
     this.storageManager.clearGameState();
+
+    // Send score to global leaderboard once
+    if (!this.scoreSubmitted && typeof submitScore === "function") {
+      this.scoreSubmitted = true;
+      submitScore(this.score);
+    }
+
   } else {
     this.storageManager.setGameState(this.serialize());
   }
@@ -97,6 +106,7 @@ GameManager.prototype.actuate = function () {
   });
 
 };
+
 
 // Represent the current game as an object
 GameManager.prototype.serialize = function () {
@@ -168,6 +178,7 @@ GameManager.prototype.move = function (direction) {
 
           // The mighty 2048 tile
           if (merged.value === 2048) self.won = true;
+
         } else {
           self.moveTile(tile, positions.farthest);
         }
@@ -189,7 +200,6 @@ GameManager.prototype.move = function (direction) {
     this.actuate();
   }
 };
-
 // Get the vector representing the chosen direction
 GameManager.prototype.getVector = function (direction) {
   // Vectors representing tile movement
@@ -247,10 +257,13 @@ GameManager.prototype.tileMatchesAvailable = function () {
 
   for (var x = 0; x < this.size; x++) {
     for (var y = 0; y < this.size; y++) {
+
       tile = this.grid.cellContent({ x: x, y: y });
 
       if (tile) {
+
         for (var direction = 0; direction < 4; direction++) {
+
           var vector = self.getVector(direction);
           var cell   = { x: x + vector.x, y: y + vector.y };
 
@@ -259,8 +272,11 @@ GameManager.prototype.tileMatchesAvailable = function () {
           if (other && other.value === tile.value) {
             return true; // These two tiles can be merged
           }
+
         }
+
       }
+
     }
   }
 
