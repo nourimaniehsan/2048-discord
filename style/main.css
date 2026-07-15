@@ -757,6 +757,8 @@ hr {
   .game-message .lower {
     margin-top: 30px !important; } }
 
+/* ===== DISCORD ACTIVITY FINAL RESPONSIVE ===== */
+
 html,
 body {
   width: 100%;
@@ -771,53 +773,147 @@ body {
 }
 
 
+/* Keep game normal size */
 .container {
-  width: min(500px, 95vw);
-  height: auto;
+  position: relative;
+  width: 500px;
+  max-width: 95vw;
 }
 
 
+/* Leaderboard */
 #leaderboard {
+
   position: fixed;
 
-  right: 12px;
-  top: 60px;
+  right: 20px;
+  top: 50%;
 
-  width: 200px;
+  transform: translateY(-50%);
+
+  width: 220px;
   max-height: 70vh;
 
   overflow: hidden;
 
   background: rgba(250,248,239,.96);
+
   border-radius: 10px;
-  padding: 10px;
+
+  padding: 12px;
+
+  box-sizing: border-box;
 
   z-index: 1000;
+
+  box-shadow: 0 4px 12px rgba(0,0,0,.18);
+
 }
 
 
-
-@media (max-width: 900px) {
+/* Discord small height */
+@media (max-height: 750px) {
 
   body {
-    align-items: flex-start;
-    padding-top: 20px;
+    align-items: center;
   }
 
 
   .container {
-    width: 95vw;
+    width: 450px;
   }
 
 
   #leaderboard {
-    position: absolute;
 
-    top: 10px;
-    right: 10px;
+    width: 190px;
 
-    width: 160px;
-    font-size: 12px;
+    font-size: 13px;
+
   }
 
 }
+
+
+
+/* Tablet */
+@media (max-width: 900px) {
+
+  .container {
+
+    width: 450px;
+
+    max-width: 90vw;
+
+  }
+
+
+  #leaderboard {
+
+    right: 10px;
+
+    width: 180px;
+
+    font-size: 13px;
+
+  }
+
+}
+
+
+
+/* Mobile Discord */
+@media (max-width: 600px) {
+
+
+  body {
+
+    align-items: flex-start;
+
+    padding-top: 20px;
+
+  }
+
+
+  .container {
+
+    width: 100%;
+
+    max-width: 420px;
+
+  }
+
+
+  #leaderboard {
+
+    position: fixed;
+
+    top: 10px;
+
+    right: 10px;
+
+    transform: none;
+
+
+    width: 150px;
+
+    max-height: 35vh;
+
+
+    font-size: 11px;
+
+    padding: 8px;
+
+  }
+
+
+}
+
+
+
+/* Remove old scaling problems */
+.container {
+  transform: none !important;
+}
+
+/* ===== END DISCORD ACTIVITY FINAL RESPONSIVE ===== */
