@@ -1,79 +1,49 @@
 import { DiscordSDK } from "@discord/embedded-app-sdk";
 
-export const discordSdk = new DiscordSDK("1526142293093122158");
+export let discordSdk = null;
 
-export let discordUser = null;
+export let discordUser = {
+    username: "LocalTest",
+    id: "local-test"
+};
 
-let startTime = Math.floor(Date.now() / 1000);
 
-
-// Connect Discord
 export async function connectDiscord() {
-
-    await discordSdk.ready();
-
-    console.log("Discord Connected!");
-
-    discordUser = await discordSdk.commands.getUser();
-
-    console.log("User:", discordUser.username);
-
-
-    // Send user to leaderboard
-    if (window.setDiscordUser) {
-        window.setDiscordUser(discordUser);
-    }
-
-
-    // Initial presence
-    updatePresence(0, 2);
-
-
-    return discordUser;
-}
-
-
-
-// Update Discord Rich Presence
-export async function updatePresence(score, tile) {
 
     try {
 
-        await discordSdk.commands.setActivity({
+        discordSdk = new DiscordSDK("1526142293093122158");
 
-            activity: {
+        await discordSdk.ready();
 
-                details: `Score: ${score}`,
+        console.log("Discord Connected!");
 
-                state: `Highest tile: ${tile}`,
+        discordUser = await discordSdk.commands.getUser();
 
-                timestamps: {
-                    start: startTime
-                },
-
-                assets: {
-
-                    large_image: "2048-logo",
-
-                    large_text: "2048"
-
-                }
-
-            }
-
-        });
+        console.log("User:", discordUser.username);
 
 
-        console.log("Presence updated");
+        window.dispatchEvent(
+            new CustomEvent("discord-user-ready", {
+                detail: discordUser
+            })
+        );
+
 
     } catch (err) {
 
-        console.error("Presence failed:", err);
+        console.warn("Not inside Discord Activity, using local user:", err);
+
+
+        window.dispatchEvent(
+            new CustomEvent("discord-user-ready", {
+                detail: discordUser
+            })
+        );
 
     }
 
 }
-
 
 
 connectDiscord();

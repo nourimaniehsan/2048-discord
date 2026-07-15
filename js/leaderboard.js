@@ -1,9 +1,13 @@
+import { createClient } from "@supabase/supabase-js";
+
 console.log("LEADERBOARD JS STARTED");
+
 
 const SUPABASE_URL = "https://jypmpeutoahrggixwuwn.supabase.co";
 const SUPABASE_KEY = "sb_publishable_hzOEGW4h6VU8MT1exrm9KA_LHsBbQFv";
 
-const supabaseClient = window.supabase.createClient(
+
+const supabaseClient = createClient(
   SUPABASE_URL,
   SUPABASE_KEY
 );
@@ -15,15 +19,16 @@ let discordUser = {
 };
 
 
-// Called from discord.js
-window.setDiscordUser = function(user) {
+// Receive Discord user from discord.js
+window.addEventListener("discord-user-ready", (event) => {
 
-  discordUser.username = user.username;
-  discordUser.id = user.id;
+  discordUser.username = event.detail.username;
+  discordUser.id = event.detail.id;
 
   console.log("Discord user loaded:", discordUser);
 
-};
+});
+
 
 
 async function submitScore(score) {
@@ -39,6 +44,7 @@ async function submitScore(score) {
     console.error("CHECK FAILED:", findError);
     return;
   }
+
 
 
   // Existing player
@@ -71,6 +77,7 @@ async function submitScore(score) {
   }
 
 
+
   // New player
   else {
 
@@ -101,6 +108,7 @@ async function submitScore(score) {
 
 
 
+
 async function loadLeaderboard() {
 
   const box = document.querySelector("#leaderboard");
@@ -118,6 +126,7 @@ async function loadLeaderboard() {
     .limit(10);
 
 
+
   if (error) {
 
     console.error("LOAD FAILED:", error);
@@ -128,6 +137,7 @@ async function loadLeaderboard() {
   }
 
 
+
   if (!data || data.length === 0) {
 
     box.innerHTML = "No scores yet";
@@ -135,6 +145,7 @@ async function loadLeaderboard() {
     return;
 
   }
+
 
 
   box.innerHTML = `
@@ -151,6 +162,7 @@ async function loadLeaderboard() {
   `;
 
 }
+
 
 
 window.submitScore = submitScore;
